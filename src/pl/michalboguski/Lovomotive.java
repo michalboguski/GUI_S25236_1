@@ -5,6 +5,9 @@ package pl.michalboguski;
 //        należy uzależnić ruch składów pociągów po trasach.
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Lovomotive {
     private String name;
     private Station homeStation;
@@ -12,6 +15,7 @@ public class Lovomotive {
     private Station destinationStation;
     private double speed;
     private Clock clock;
+    private Set<Electric> electricConnections;
     private int id;
 
     public static int freeID = 0;
@@ -23,6 +27,7 @@ public class Lovomotive {
         this.destinationStation = destinationStation;
         this.speed = speed;
         this.id = ++freeID;
+        electricConnections = new HashSet<Electric>();
         this.clock = new Clock(this);
         clock.start();
 
@@ -34,5 +39,13 @@ public class Lovomotive {
 
     public void setSpeed(double speed) {
         this.speed = speed;
+    }
+
+    public Set<Electric> getElectricConnections() {
+        return electricConnections;
+    }
+
+    public void setElectricConnections(Set<Electric> electricConnections) {
+        this.electricConnections = electricConnections;
     }
 }

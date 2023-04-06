@@ -1,0 +1,13 @@
+• wagon pasażerski, wymagający podłączenia do sieci elektrycznej lokomotywy
+• wagon pocztowy, wymagający podłączenia do sieci elektrycznej lokomotywy
+• wagon bagażowo-pocztowy
+• wagon restauracyjny, wymagający podłączenia do sieci elektrycznej lokomotywy
+• wagon towarowy podstawowy
+• wagon towarowy ciężki
+• wagon chłodniczy, będący rodzajem wagonu towarowego podstawowego, wymagający podłączenia do sieci elektrycznej lokomotywy
+• wagon na materiały ciekłe, będący rodzajem wagonu towarowego podstawowego
+• wagon na materiały gazowe, będący rodzajem wagonu towarowego podstawowego
+• wagon na materiały wybuchowe, będący rodzajem wagonu towarowego ciężkiego
+• wagon na materiały toksyczne, będący rodzajem wagonu towarowego ciężkiego
+• wagon na ciekłe materiały toksyczne, który jest rodzajem wagonu towarowego ciężkiego,
+oraz posiada cechy wagonu na materiały ciekłe
