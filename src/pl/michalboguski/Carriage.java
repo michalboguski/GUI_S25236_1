@@ -7,13 +7,47 @@ package pl.michalboguski;
 
 public abstract class Carriage {
 
-    Sender sender;
-    Security[] securities;
-    double netWeight;
+    protected Sender sender;
+    protected Security[] securities;
+    protected double netWeight;
+    protected double grossWeight;
 
-    public Carriage(Sender sender, Security[] securities, double netWeight) {
+    public Carriage(Sender sender, Security[] securities, double netWeight, double grossWeight) {
         this.sender = sender;
         this.securities = securities;
         this.netWeight = netWeight;
+        this.grossWeight = grossWeight;
+    }
+
+    public Sender getSender() {
+        return sender;
+    }
+
+    public void setSender(Sender sender) {
+        this.sender = sender;
+    }
+
+    public Security[] getSecurities() {
+        return securities;
+    }
+
+    public void setSecurities(Security[] securities) {
+        this.securities = securities;
+    }
+
+    public double getNetWeight() {
+        return netWeight;
+    }
+
+    public void setNetWeight(double netWeight) {
+        this.netWeight = netWeight;
+    }
+
+    public double getGrossWeight() {
+        return grossWeight;
+    }
+
+    public void setGrossWeight(double grossWeight) {
+        this.grossWeight = grossWeight;
     }
 }
