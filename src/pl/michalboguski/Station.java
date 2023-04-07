@@ -10,6 +10,19 @@ public class Station {
         this.position = position;
     }
 
+    public Station(String name) {
+        this.name = name;
+    }
+
+    public static Station[] createRandomStations(int number){
+        Station[] stations = new Station[number];
+
+        for (int i = 0; i< number; i++){
+            stations[i] = new Station("Stacja 00"+i);
+        }
+        return stations;
+    }
+
     public String getName() {
         return name;
     }

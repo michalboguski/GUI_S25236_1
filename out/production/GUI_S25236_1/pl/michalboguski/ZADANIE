@@ -1,0 +1,13 @@
+Składy pociągów poruszają się po ustalonej trasie (wskazanej obiektem stacji startowej i docelowej). Trasę pomiędzy stacjami każdorazowo należy ustalić (nie musi być to trasa najkrótsza,
+ale każdorazowo musi być ustalona algorytmicznie na bazie grafu połączeń kolejowych).
+Skład pociągu staje na każdej napotkanej po drodze stacji. Postój na stacjach pośrednich
+trwa 2 sekundy. Po dotarciu na stację docelową skład pociągu oczekuje 30 sekund, a następnie
+pociąg wyrusza w drogę powrotną (ponownie ustalając trasę) i kursuje cały czas w tym cyklu.
+Należy zaimplementować również prewencję kolizji, w której pomiędzy dwoma stacjami może
+poruszać się maksymalnie jeden skład pociągu. Jeśli nastąpi taka sytuacja, że w trasie znajduje
+się już pociąg, inne oczekują w kolejce na zwolnienie trasy i w kolejności zgłoszenia oczekiwania
+będą przepuszczane przez pożądaną trakcję pomiędzy stacjami kolejowymi.
+Wszystkie kwestie związane z czasem należy zrealizować z uwzględnieniem wątków (nie wolno
+wykorzystywać klasy Timer ). Należy zapewnić przemyślaną i poprawną synchronizację wszystkich wątków. Nie można łączyć różnych funkcjonalności w jeden wątek.
+Gdy skład pociągu przekroczy prędkość 200km/h, należy poinformować użytkownika aplikacji stosownym komunikatem na konsoli w postaci wyjątku typu RailroadHazard zawierającego
+podstawowe informacje dot. składu pociągu przekazane poprzez wiadomość wyjątku.

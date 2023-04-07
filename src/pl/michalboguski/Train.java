@@ -6,6 +6,8 @@ public class Train {
     private Lovomotive locomotive;
     private List<Carriage> carriages;
     private int maxPlugCarriages;
+    private Station startStation;
+    private Station destinationStation;
 
     public Train(Lovomotive locomotive, List<Carriage> carriages, int maxPlugCarriages) {
         this.locomotive = locomotive;
@@ -27,4 +29,10 @@ public class Train {
         else
             throw new Exception("CANT ADD CARRIAGE: TO MANY OR OVERWEIGHT!!! ");
     }
+
+    public Route findRoute(){
+        return new Route();
+    }
+
+
 }
