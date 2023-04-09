@@ -1,27 +1,37 @@
 package pl.michalboguski;
 
+import java.util.*;
+
 public class Station {
     private String name;
     Coorrdinates position;
-    private Station[] linkedStation;
+    private List<Station> linkedStation;
 
     public Station(String name, Coorrdinates position) {
         this.name = name;
         this.position = position;
+        this.linkedStation = new ArrayList<>();
     }
 
     public Station(String name) {
         this.name = name;
     }
-
-    public static Station[] createRandomStations(int number){
-        Station[] stations = new Station[number];
-
-        for (int i = 0; i< number; i++){
-            stations[i] = new Station("Stacja 00"+i);
-        }
-        return stations;
+    public Station(String name, int x, int y, WorldMap map) {
+        this.name = name;
+        Coorrdinates tmp = new Coorrdinates(x, y);
+        if (!map.stationsPositions.contains(tmp))
+        this.position = tmp;
     }
+
+    public double calculateDistance(Station s2) {
+        double x1 = getPosition().getX();
+        double y1 = getPosition().getY();
+        double x2 = s2.getPosition().getX();
+        double y2 = s2.getPosition().getY();
+        return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
+    }
+
+
 
     public String getName() {
         return name;
@@ -39,11 +49,16 @@ public class Station {
         this.position = position;
     }
 
-    public Station[] getLinkedStation() {
+    public List<Station> getLinkedStation() {
         return linkedStation;
     }
 
-    public void setLinkedStation(Station[] linkedStation) {
+    public void setLinkedStation(List<Station> linkedStation) {
         this.linkedStation = linkedStation;
+    }
+
+    @Override
+    public String toString() {
+        return "" +name + "["+position.getX()+", "+position.getY()+"]";
     }
 }
