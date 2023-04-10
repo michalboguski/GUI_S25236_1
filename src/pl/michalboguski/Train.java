@@ -30,9 +30,7 @@ public class Train {
             throw new Exception("CANT ADD CARRIAGE: TO MANY OR OVERWEIGHT!!! ");
     }
 
-    public Route findRoute(){
-        return new Route();
-    }
+
 
 
 }

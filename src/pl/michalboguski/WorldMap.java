@@ -108,4 +108,29 @@ public class WorldMap {
     public void setWorldMap(String[][] worldMap) {
         this.worldMap = worldMap;
     }
+
+   public List<Station> stationsToList(){
+       List<Station> l = new ArrayList<>(stations);
+        return l;
+   }
+
+    public void setStations(Set<Station> stations) {
+        this.stations = stations;
+    }
+
+    public Set<Coorrdinates> getStationsPositions() {
+        return stationsPositions;
+    }
+
+    public void setStationsPositions(Set<Coorrdinates> stationsPositions) {
+        this.stationsPositions = stationsPositions;
+    }
+
+    public Set<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(Set<Link> links) {
+        this.links = links;
+    }
 }
