@@ -5,12 +5,12 @@ import java.util.*;
 public class Station {
     private String name;
     Coorrdinates position;
-    private List<Station> linkedStation;
+    private Set<Station> linkedStation;
 
     public Station(String name, Coorrdinates position) {
         this.name = name;
         this.position = position;
-        this.linkedStation = new ArrayList<>();
+        this.linkedStation = new HashSet<>();
     }
 
     public Station(String name) {
@@ -49,16 +49,16 @@ public class Station {
         this.position = position;
     }
 
-    public List<Station> getLinkedStation() {
+    public Set<Station> getLinkedStation() {
         return linkedStation;
     }
 
-    public void setLinkedStation(List<Station> linkedStation) {
+    public void setLinkedStation(Set<Station> linkedStation) {
         this.linkedStation = linkedStation;
     }
 
     @Override
     public String toString() {
-        return "" +name + "["+position.getX()+", "+position.getY()+"]";
+        return "" +name;// + "["+position.getX()+", "+position.getY()+"]";
     }
 }

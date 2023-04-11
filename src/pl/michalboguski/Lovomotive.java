@@ -30,7 +30,7 @@ public class Lovomotive {
         this.maxPull = maxPull;
         this.id = ++freeID;
         electricConnections = new HashSet<Electric>();
-        this.clock = new Clock(this);
+        this.clock = new Clock(this,1000);
         clock.start();
 
     }

@@ -21,8 +21,8 @@ public class WorldMap {
     }
 
     public void fillMap(String c) {
-        for (int i = 0; i < height - 1; i++) {
-            for (int j = 0; j < width - 1; j++) {
+        for (int i = 0; i < height ; i++) {
+            for (int j = 0; j < width ; j++) {
                 worldMap[i][j] = c;
             }
         }
@@ -42,6 +42,11 @@ public class WorldMap {
             }
 
         }
+        uptadeStationPositions();
+
+    }
+
+    public void uptadeStationPositions(){
         for (Station station : stations) {
             worldMap[station.position.getY()][station.position.getX()] = station.getName();
         }
@@ -49,27 +54,26 @@ public class WorldMap {
 
     public void showMap() {
 
-        for (int i = 0; i < height - 1; i++) {
-            for (int j = 0; j < width - 1; j++) {
+        for (int i = 0; i < height ; i++) {
+            for (int j = 0; j < width ; j++) {
                 System.out.print(worldMap[i][j]);
             }
             System.out.println();
         }
     }
 
-    public void establishConnections(){
+
+    public void establishConnections(int minLinks){
+        int min = 0;
         Station[] arrS = stations.toArray(new Station[0]);
 
 
         for (int i = 0; i < arrS.length; i++) {
             List<Link> tmp = new ArrayList<>();
             for (int j = 0; j < arrS.length; j++) {
-                if (i!=j)
-//                    System.out.print("STATION:"+arrS[i].getName()+" |");
-//                System.out.print(arrS[i].calculateDistance(arrS[j])+" |");
-//                    System.out.print("STATION:"+arrS[j].getName());
-//                    System.out.println();
+                if (i!=j){
                 tmp.add(new Link(arrS[i],arrS[j]));
+            }
             }
 
             Collections.sort(tmp, new Comparator<Link>() {
@@ -78,8 +82,10 @@ public class WorldMap {
                     return Double.compare(o1.distance,o2.distance);
                 }
             });
-            for (int k = 0; k< Math.sqrt(tmp.size()-1); k++){
+            if (min == 0) {min = (int) (Math.sqrt(tmp.size()));}
+            for (int k = 0; k< min; k++){
                 arrS[i].getLinkedStation().add(tmp.get(k).station2);
+                tmp.get(k).station2.getLinkedStation().add(arrS[i]);
             }
 
     }
@@ -132,5 +138,11 @@ public class WorldMap {
 
     public void setLinks(Set<Link> links) {
         this.links = links;
+    }
+
+    public void getNumberOfLinkedStations(){
+        for (Station station : stations) {
+            System.out.print(station.getLinkedStation().size()+" |");
+        }
     }
 }

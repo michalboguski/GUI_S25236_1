@@ -4,10 +4,12 @@ import java.util.Random;
 
 public class Clock extends Thread{
     Lovomotive lovomotive;
+    int interval;
 
-    public Clock(Lovomotive lovomotive) {
+    public Clock(Lovomotive lovomotive, int interval) {
         super();
         this.lovomotive = lovomotive;
+        this.interval = interval;
     }
 
     @Override
@@ -18,13 +20,13 @@ public class Clock extends Thread{
         while (this.isAlive())
         {
             try {
-            Thread.sleep(1000);
+            Thread.sleep(interval);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
             incrase = random.nextBoolean();
             lovomotive.setSpeed(lovomotive.getSpeed()*(incrase ? 1.03 : 0.97));
-
+           // System.out.println(lovomotive.getSpeed());
 
         }
     }

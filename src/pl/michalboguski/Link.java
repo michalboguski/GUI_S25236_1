@@ -19,4 +19,11 @@ public class Link {
         double y2 = s2.getPosition().getY();
         return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
     }
+
+    @Override
+    public String toString() {
+        return "["+station1+"=="+station2+"]";
+    }
+
+
 }
