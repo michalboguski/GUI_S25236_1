@@ -5,9 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class Main {
+public class Program {
+
+
 
     public static void main(String[] args) {
+        new Menu();
 
 
         WorldMap testMap = new WorldMap(15,15, " . ");
@@ -34,19 +37,13 @@ public class Main {
         Station s10 = new Station("S10",p10);
 
         List<Station> s = Arrays.asList(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10);
-       testMap.createRandomStations(10,"C");
-        testMap.createRandomStations(10,"B");
+      // testMap.createRandomStations(10,"C");
+       // testMap.createRandomStations(10,"B");
 
         testMap.stations.addAll(s);
         testMap.uptadeStationPositions();
         testMap.showMap();
         testMap.establishConnections(3);
-
-        Route r1 = new Route(testMap.stations,testMap.stationsToList().get(1),testMap.stationsToList().get(6));
-        System.out.println(r1);
-        for (Station station : testMap.stations) {
-            System.out.println(station+": "+station.getLinkedStation());
-        }
 
         Lovomotive l1 = new Lovomotive("Lokomtywa1",s10,s6,s9,100,10);
         Carriage c1 = new HavyCarriage(new Sender("ADAM"),new Security[]{Security.HEAVY_DOOR},10000,20000);
@@ -56,8 +53,18 @@ public class Main {
         LinkedList<Carriage> carriages = new LinkedList<>(Arrays.asList(c1,c2,c3));
 
         Train t1 = new Train(testMap,l1, carriages, l1.getMaxPull(), s1,s2);
-            t1.drive();
-        System.out.println(t1);
+        t1.getRoute();
+            t1.start();
+        Train t2 = new Train(testMap,l1, carriages, l1.getMaxPull(), s1,s2);
+        t2.getRoute();
+        t2.start();
+//        Train t3 = new Train(testMap,l1, carriages, l1.getMaxPull(), s2,s1);
+//        t3.getRoute();
+//        t3.start();
+//        Train t4 = new Train(testMap,l1, carriages, l1.getMaxPull(), s2,s1);
+//        t4.getRoute();
+//        t4.start();
+
 
 
     }

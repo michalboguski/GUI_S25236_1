@@ -29,7 +29,7 @@ public class Route {
         while (queue.size() != 0 && !found ){
             source = queue.poll();
 
-            stationIterator = source.getLinkedStation().iterator();
+            stationIterator = source.getLinkedStation().keySet().iterator();
             while (stationIterator.hasNext()) {
                 Station tmpStation = stationIterator.next();
                 if (!visided.containsKey(tmpStation)) {
@@ -103,7 +103,7 @@ public class Route {
     public String printConections(){
         String s ="";
         for (Link link : connectedStations) {
-            s+= link.station1+"--"+link.station2+" | ";
+            s+= link.station1+"<-->"+link.station2+"("+(int)link.distance+") |  ";
         }
         return s +" liczba linkow: "+connectedStations.size();
     }

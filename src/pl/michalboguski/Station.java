@@ -2,15 +2,21 @@ package pl.michalboguski;
 
 import java.util.*;
 
-public class Station {
+public class Station{
+
     private String name;
     Coorrdinates position;
-    private Set<Station> linkedStation;
+
+    private HashMap<Station, Boolean> linkedStation;
+    private HashMap<Station,LinkedList<Train>> queues;
 
     public Station(String name, Coorrdinates position) {
         this.name = name;
         this.position = position;
-        this.linkedStation = new HashSet<>();
+        this.linkedStation = new HashMap<>();
+        this.queues = new HashMap<>();
+
+
     }
 
     public Station(String name) {
@@ -21,6 +27,12 @@ public class Station {
         Coorrdinates tmp = new Coorrdinates(x, y);
         if (!map.stationsPositions.contains(tmp))
         this.position = tmp;
+    }
+
+    public void manage(){
+        StationManager stationManager = new StationManager(this);
+        this.linkedStation.forEach((n, k) -> this.queues.put(n, new LinkedList<>()));
+        stationManager.start();
     }
 
     public double calculateDistance(Station s2) {
@@ -49,11 +61,19 @@ public class Station {
         this.position = position;
     }
 
-    public Set<Station> getLinkedStation() {
+    public HashMap<Station, Boolean> getLinkedStation() {
         return linkedStation;
     }
 
-    public void setLinkedStation(Set<Station> linkedStation) {
+    public HashMap<Station, LinkedList<Train>> getQueues() {
+        return queues;
+    }
+
+    public void setQueues(HashMap<Station, LinkedList<Train>> queues) {
+        this.queues = queues;
+    }
+
+    public void setLinkedStation(HashMap<Station, Boolean> linkedStation) {
         this.linkedStation = linkedStation;
     }
 

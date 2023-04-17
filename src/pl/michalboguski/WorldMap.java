@@ -3,6 +3,10 @@ package pl.michalboguski;
 import java.util.*;
 
 public class WorldMap {
+    public static final int second = 1;
+    public static final int minute = 60;
+    public static final int hour = 3600;
+
     private int width;
     private int height;
     String[][] worldMap;
@@ -84,11 +88,13 @@ public class WorldMap {
             });
             if (min == 0) {min = (int) (Math.sqrt(tmp.size()));}
             for (int k = 0; k< min; k++){
-                arrS[i].getLinkedStation().add(tmp.get(k).station2);
-                tmp.get(k).station2.getLinkedStation().add(arrS[i]);
+                arrS[i].getLinkedStation().put(tmp.get(k).station2,false);
+                tmp.get(k).station2.getLinkedStation().put(arrS[i],false);
             }
-
     }
+        for (Station station : stations) {
+            station.manage();
+        }
     }
 
     public int getWidth() {

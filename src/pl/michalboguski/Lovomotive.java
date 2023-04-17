@@ -35,6 +35,25 @@ public class Lovomotive {
 
     }
 
+    public Lovomotive(String name, int id, Station homeStation, Station sourceStation, Station destinationStation, double speed, int maxPull) {
+        this.name = name;
+        this.homeStation = homeStation;
+        this.sourceStation = sourceStation;
+        this.destinationStation = destinationStation;
+        this.speed = speed;
+        this.maxPull = maxPull;
+        this.id = id;
+        electricConnections = new HashSet<Electric>();
+        this.clock = new Clock(this,1000);
+        clock.start();
+    }
+
+    public static Lovomotive createRandomLocomotive(){
+        int identyficator = ++freeID;
+        String tmpName = "Locomotive"+identyficator;
+        return new Lovomotive(tmpName,identyficator,null,null,null, 180,15);
+    }
+
     public String getName() {
         return name;
     }
