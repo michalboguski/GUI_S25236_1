@@ -1,5 +1,6 @@
 package pl.michalboguski;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
@@ -20,7 +21,7 @@ public class Menu {
         int pick = scanNumber(0,4);
         switch (pick){
             case 0 : {
-                System.out.println("case0");
+                System.exit(0);
                 break;}
             case 1 : {break;}
             case 2 : {break;}
@@ -31,15 +32,22 @@ public class Menu {
     }
 
     public int scanNumber(int startRange, int endRange){
+        try {
+        int scanned;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Podaj liczbe z zakresu: "+startRange+" - "+endRange);
-        int scanned = scanner.nextInt();
+
+        scanned = scanner.nextInt();
+
         if (scanned >= startRange && scanned <= endRange) {
             return scanned;
         } else {
             scanned = scanNumber(startRange,endRange);
         }
         return  scanned;
-
+        } catch (InputMismatchException ime) {
+            // zignorowc bo dziala
+        }
+            return  scanNumber(startRange,endRange);
     }
 }

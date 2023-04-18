@@ -14,18 +14,7 @@ package pl.michalboguski;
                     if (linkedStation.getLinkedStation().get(linkedStation) != null) {
                         station.getLinkedStation().replace(linkedStation, true);
                     }
-                    // System.out.println("CHECKED" + station+":  "+station.getLinkedStation());
-
-//                    try {
-//                        Thread.sleep(3000);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
                 }
-//                System.out.println();
-//                System.out.println("----------------------------------------------------------------------------------------------------------------");
-//                System.out.println();
-
             }
         }
     }

@@ -3,30 +3,39 @@ package pl.michalboguski;
 import java.util.*;
 
 public class Station{
+    public static int idLoop = 0;
+    public static int freeID = 0;
+    public static char freeNick = 'A';
+    public static Set<Coorrdinates> stationsPositions = new HashSet<>();
 
+    private int id;
     private String name;
     Coorrdinates position;
 
     private HashMap<Station, Boolean> linkedStation;
     private HashMap<Station,LinkedList<Train>> queues;
 
-    public Station(String name, Coorrdinates position) {
-        this.name = name;
-        this.position = position;
+    public Station() {
+        this.id = ++freeID;
+        if (freeID % 99 == 0) {freeNick++; idLoop = 0;}
+
+        if (idLoop < 10) {
+            this.name = freeNick+"0"+ ++idLoop;
+        } else {
+            this.name = String.valueOf(freeNick)+""+ ++idLoop;
+        }
+
+        Random n = new Random();
+        Coorrdinates positionTmp = new Coorrdinates(n.nextInt(Program.mapWidth),n.nextInt(Program.mapHeight));
+        while (stationsPositions.contains(positionTmp)) {
+            positionTmp = new Coorrdinates(n.nextInt(Program.mapWidth),n.nextInt(Program.mapHeight));
+        }
+        this.position = positionTmp;
+        stationsPositions.add(positionTmp);
         this.linkedStation = new HashMap<>();
         this.queues = new HashMap<>();
 
 
-    }
-
-    public Station(String name) {
-        this.name = name;
-    }
-    public Station(String name, int x, int y, WorldMap map) {
-        this.name = name;
-        Coorrdinates tmp = new Coorrdinates(x, y);
-        if (!map.stationsPositions.contains(tmp))
-        this.position = tmp;
     }
 
     public void manage(){
@@ -62,23 +71,25 @@ public class Station{
     }
 
     public HashMap<Station, Boolean> getLinkedStation() {
-        return linkedStation;
+        return this.linkedStation;
     }
 
     public HashMap<Station, LinkedList<Train>> getQueues() {
         return queues;
     }
 
-    public void setQueues(HashMap<Station, LinkedList<Train>> queues) {
-        this.queues = queues;
-    }
-
-    public void setLinkedStation(HashMap<Station, Boolean> linkedStation) {
-        this.linkedStation = linkedStation;
-    }
-
     @Override
     public String toString() {
         return "" +name;// + "["+position.getX()+", "+position.getY()+"]";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void printLinkedStations(){
+        for (Station station : linkedStation.keySet()){
+            System.out.print(station.toString()+", ");
+        }
     }
 }

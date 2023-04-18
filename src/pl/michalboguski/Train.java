@@ -3,6 +3,7 @@ package pl.michalboguski;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 
 public class Train extends Thread{
@@ -14,18 +15,20 @@ public class Train extends Thread{
     private Station startStation;
     private Station destinationStation;
     private Route route;
+    private Set<Station> allStation;
 
 
 
 
-    public Train(WorldMap map, Lovomotive locomotive, LinkedList<Carriage> carriages, int maxPlugCarriages, Station startStation, Station destinationStation) {
+    public Train(Lovomotive locomotive, LinkedList<Carriage> carriages, int maxPlugCarriages, WorldMap map, Station startStation, Station destinationStation) {
         this.name = "Train"+ ++freeId;
         this.locomotive = locomotive;
         this.carriages = carriages;
         this.maxPlugCarriages = maxPlugCarriages;
+        this.allStation = map.getStations();
         this.startStation = startStation;
         this.destinationStation = destinationStation;
-        this.route = new Route(map.stations,startStation,destinationStation);
+        this.route = new Route(startStation, destinationStation);
     }
 
     public double calculateCarriagesWeight(){
@@ -70,9 +73,11 @@ public class Train extends Thread{
                 Station previusStation = null;
                 double distance = 0;
                 double movedDistance = 0;
-
+        Log.info(this.name+ "1 przed while");
                 while (this.isAlive()) {
+                    Log.info(this.name+ "2 w while przed forech");
                     for (Link routeLink : route.getLinks()) {
+                        Log.info(this.name+ "3 w  forech");
                         nextStation = routeLink.station2;
                         previusStation = routeLink.station1;
                         actualStation = previusStation;

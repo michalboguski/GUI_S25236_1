@@ -1,71 +1,144 @@
 package pl.michalboguski;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Program {
+    public static final int second = 1;
+    public static final int minute = 60;
+    public static final int hour = 3600;
+    private WorldMap worldMap;
+    static int mapWidth;
+    static int mapHeight;
+    public Program() {
+
+    }
+    public  Set<Station> getStations(){
+        return worldMap.getStations();
+    }
+
+    public void establishConnectionsForAll(int min){
+
+        Station[] arrS = this.getStations().toArray(new Station[0]);
+
+
+        for (int i = 0; i < arrS.length; i++) {
+            List<Link> tmp = new ArrayList<>();
+            for (int j = 0; j < arrS.length; j++) {
+                if (i!=j){
+                    tmp.add(new Link(arrS[i],arrS[j]));
+                }
+            }
+
+            tmp.sort(new Comparator<Link>() {
+                @Override
+                public int compare(Link o1, Link o2) {
+                    return Double.compare(o1.distance, o2.distance);
+                }
+            });
+            if (min == 0) {min = (int) (Math.sqrt(tmp.size()+1));}
+            for (int k = 0; k< min; k++){
+                if (!arrS[i].equals(tmp.get(k).station2)) {
+                    arrS[i].getLinkedStation().put(tmp.get(k).station2, false);
+                    tmp.get(k).station2.getLinkedStation().put(arrS[i], false);
+                }
+            }
+        }
+    }
+
+    public void establishConnection(Station station,int min){
+        List<Link> tmp = new ArrayList<>();
+            for (Station s : getStations()) {
+                if (!s.equals(station)){
+                    tmp.add(new Link(station,s));
+                }
+            }
+            tmp.sort(new Comparator<Link>() {
+                @Override
+                public int compare(Link o1, Link o2) {
+                    return Double.compare(o1.distance, o2.distance);
+                }
+            });
+            if (min == 0) {min = (int) (Math.sqrt(tmp.size()));}
+            for (int k = 0; k< min; k++){
+                connectStations(tmp.get(k).station2,station);
+            }
+
+    }
+
+    public void connectStations(Station station1, Station station2){
+        if (!station1.equals(station2)) {
+            station1.getLinkedStation().put(station2, false);
+            station2.getLinkedStation().put(station1, false);
+            System.out.println("conected: "+station1+" and "+station2+" succes");
+        }
+        System.out.println("stations ara the same. Cannot coneted with self");
+    }
+
+    public void uptadeStationPositions(Station station){
+            worldMap.graphicViev[station.position.getY()][station.position.getX()] = station.getName();
+    }
+    public void createRandomStations(int number){
+        int stationCount = 0;
+        while (stationCount < number){
+            getStations().add(this.createStation());
+                stationCount++;
+
+        }
+    }
+
+
+
+    public void getNumberOfLinkedStations(){
+        for (Station station : this.getStations()) {
+            System.out.print(station.getLinkedStation().size()+" |");
+        }
+    }
+    private Station createStation() {
+        Station newStation = new Station();
+        getStations().add(newStation);
+        uptadeStationPositions(newStation);
+        return newStation;
+    }
+
+//    public Lovomotive createLocomotive(){
+//        return  new Lovomotive()
+//    }
+
 
 
 
     public static void main(String[] args) {
-        new Menu();
+new Menu();
+        Program program = new Program();
+        program.test();
+    }
+    public void test(){
+        worldMap = new WorldMap(40,30, " . ");
+        createRandomStations(100);
+        System.out.println("Liczba stacji: " +getStations().size());
+
+        worldMap.showMap();
+        establishConnectionsForAll(0);
+
+        System.out.println("liczba stacji: "+getStations().size());
+        System.out.println(getStations());
+
+        for (Station station : getStations()) {
+            System.out.println(station.getName()+": "+station.getLinkedStation().size());
+            station.printLinkedStations();
+            System.out.println();
+        }
 
 
-        WorldMap testMap = new WorldMap(15,15, " . ");
-        Coorrdinates p1 = new Coorrdinates(1,3);
-        Coorrdinates p2 = new Coorrdinates(9,8);
-        Coorrdinates p3 = new Coorrdinates(8,2);
-        Coorrdinates p4 = new Coorrdinates(5,5);
-        Coorrdinates p5 = new Coorrdinates(6,7);
-        Coorrdinates p6 = new Coorrdinates(9,0);
-        Coorrdinates p7 = new Coorrdinates(3,1);
-        Coorrdinates p8 = new Coorrdinates(4,8);
-        Coorrdinates p9 = new Coorrdinates(0,9);
-        Coorrdinates p10 = new Coorrdinates(1,7);
 
-        Station s1 = new Station("S1",p1);
-        Station s2 = new Station("S2",p2);
-        Station s3 = new Station("S3",p3);
-        Station s4 = new Station("S4",p4);
-        Station s5 = new Station("S5",p5);
-        Station s6 = new Station("S6",p6);
-        Station s7 = new Station("S7",p7);
-        Station s8 = new Station("S8",p8);
-        Station s9 = new Station("S9",p9);
-        Station s10 = new Station("S10",p10);
-
-        List<Station> s = Arrays.asList(s1,s2,s3,s4,s5,s6,s7,s8,s9,s10);
-      // testMap.createRandomStations(10,"C");
-       // testMap.createRandomStations(10,"B");
-
-        testMap.stations.addAll(s);
-        testMap.uptadeStationPositions();
-        testMap.showMap();
-        testMap.establishConnections(3);
-
-        Lovomotive l1 = new Lovomotive("Lokomtywa1",s10,s6,s9,100,10);
+        Lovomotive l1 = new Lovomotive("Lokomtywa1",null,null,null,100,10);
         Carriage c1 = new HavyCarriage(new Sender("ADAM"),new Security[]{Security.HEAVY_DOOR},10000,20000);
         Carriage c2 = new HavyCarriage(new Sender("EWA"),new Security[]{Security.HEAVY_DOOR},10000,22000);
         Carriage c3 = new HavyCarriage(new Sender("DAMIAN"),new Security[]{Security.HEAVY_DOOR},10000,21000);
 
         LinkedList<Carriage> carriages = new LinkedList<>(Arrays.asList(c1,c2,c3));
 
-        Train t1 = new Train(testMap,l1, carriages, l1.getMaxPull(), s1,s2);
-        t1.getRoute();
-            t1.start();
-        Train t2 = new Train(testMap,l1, carriages, l1.getMaxPull(), s1,s2);
-        t2.getRoute();
-        t2.start();
-//        Train t3 = new Train(testMap,l1, carriages, l1.getMaxPull(), s2,s1);
-//        t3.getRoute();
-//        t3.start();
-//        Train t4 = new Train(testMap,l1, carriages, l1.getMaxPull(), s2,s1);
-//        t4.getRoute();
-//        t4.start();
 
 
-
-    }
+}
 }

@@ -8,28 +8,36 @@ public class Route {
     Station endStation;
 
 
-    public Route(Set<Station> all, Station startStation, Station endStation) {
-        this.connectedStations = new LinkedList<>(serchRoute(all,startStation,endStation));
+    public Route( Station startStation, Station endStation) {
+        System.out.println("konstruktor ROUTE");
+        this.connectedStations = new LinkedList<>(serchRoute(startStation,endStation));
         this.startStation = startStation;
         this.endStation = endStation;
 
     }
 
-    public LinkedList<Link> serchRoute(Set<Station> allStations, Station sourceStation, Station destinationStation){
+
+
+    public LinkedList<Link> serchRoute( Station sourceStation, Station destinationStation){
         Map<Station, Station> visided = new LinkedHashMap<>(); // STATION, PARENT
         LinkedList<Station> queue = new LinkedList<>();
         LinkedList<Link> links = new LinkedList<>();
         boolean found = false;
         Station source = sourceStation;
+        System.out.println("source.getLinkedStation() :" +source.getLinkedStation());
         Station destination = destinationStation;
         queue.add(source);
+        System.out.println("source.getLinkedStation() :" +source.getLinkedStation());
         visided.put(source,null);
-
+        System.out.println("source.getLinkedStation() :" +source.getLinkedStation());
         Iterator<Station> stationIterator;
         while (queue.size() != 0 && !found ){
             source = queue.poll();
+            System.out.println("source.getLinkedStation() :" +source.getLinkedStation());
 
             stationIterator = source.getLinkedStation().keySet().iterator();
+            System.out.println("source.getLinkedStation() :" +source.getLinkedStation());
+            System.out.println("source ma next station " + stationIterator.hasNext());
             while (stationIterator.hasNext()) {
                 Station tmpStation = stationIterator.next();
                 if (!visided.containsKey(tmpStation)) {
@@ -43,11 +51,12 @@ public class Route {
                 }
             }
         }
-
+        System.out.println("koniec searchroute, visited: " + visided);
         links = links(visided,sourceStation,destinationStation);
+
         return  links;
     }
-    public LinkedList<Link> links(Map<Station, Station> BFSRoutes,Station s, Station d){
+    public LinkedList<Link> links(Map<Station, Station> BFSRoutes, Station s, Station d){
         LinkedList<Link> LINKS = new LinkedList<>();
         Station station = d;
         Station parent ;
@@ -55,7 +64,7 @@ public class Route {
         while ((parent = BFSRoutes.get(station)) != null ){
             Link newLink = new Link(parent,station);
             if (!LINKS.contains(newLink)) {
-            LINKS.add(newLink);
+                LINKS.add(newLink);
             }
             if (parent.equals(s)) {
                 break;
@@ -67,6 +76,8 @@ public class Route {
         Collections.reverse(LINKS);
         return LINKS;
     }
+
+
 
     @Override
     public String toString() {
